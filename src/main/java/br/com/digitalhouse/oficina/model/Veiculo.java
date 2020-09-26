@@ -4,9 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+
+
 
 @Entity
 @Table(name = "veiculos")
@@ -26,9 +27,6 @@ public class Veiculo {
 	@Column(length = 30, nullable = false)
 	private String marca;
 
-	@ManyToOne
-	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
 	
 	public Veiculo() {}
 	

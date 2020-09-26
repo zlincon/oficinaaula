@@ -22,7 +22,8 @@ public class Cliente {
 	@Column(length = 60, nullable = false)
 	private String nome;
 	
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany
+	@JoinColumn(name="cliente_id")
 	private Set<Veiculo> veiculos = new HashSet<Veiculo>();
 	
 	
