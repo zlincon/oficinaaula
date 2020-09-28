@@ -16,10 +16,10 @@ import br.com.digitalhouse.oficina.repository.VeiculoRepository;
 @Service
 public class VeiculoService {
 	
-	private final VeiculoRepository veiculoRepository;
-	
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	private final VeiculoRepository veiculoRepository;
 	
 	@Autowired
 	public VeiculoService(VeiculoRepository veiculoRepository) {
@@ -81,7 +81,6 @@ public class VeiculoService {
 		return this.veiculoRepository.findAllByCor(cor);
 		
 	}
-	
 	
 	
 	
