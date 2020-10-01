@@ -59,6 +59,12 @@ public class VeiculoService {
 	}
 	
 	
+	public List<Veiculo> findByCor(String cor) {
+		
+		return this.veiculoRepository.findAllByCor(cor);
+		
+	}
+	
 	
 	
 	
