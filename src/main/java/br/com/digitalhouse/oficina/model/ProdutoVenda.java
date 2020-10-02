@@ -7,6 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "produtos_vendas")
 public class ProdutoVenda {
@@ -17,7 +19,7 @@ public class ProdutoVenda {
 	@ManyToOne
 	@MapsId("vendaId")
 	@JoinColumn(name="venda_id")
-	//@JsonIgnore
+	@JsonIgnore
 	private Venda venda;
 	
 	@ManyToOne
