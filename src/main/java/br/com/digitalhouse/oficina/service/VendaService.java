@@ -38,7 +38,7 @@ public class VendaService {
 		
 		this.produtoVendaRepository.saveAll(venda.getProdutos());
 		
-		return this.vendaRepository.save(venda);
+		return novaVenda;
 	}
 	
 	public Venda update(Venda novo) {
