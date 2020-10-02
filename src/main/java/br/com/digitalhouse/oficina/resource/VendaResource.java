@@ -43,13 +43,17 @@ public class VendaResource {
 	@Transactional
 	public ResponseEntity<Void> create( @RequestBody Venda venda){
 		
-		
 	
 		
-		Venda vendaSalva =  this.vendaRepository.save(venda);
 		
-	
-		this.produtoVendaRepository.saveAll(vendaSalva.getProdutos());
+		Venda novaVenda =  this.vendaRepository.save(venda);
+		
+		for(ProdutoVenda pv :venda.getProdutos()) {
+			pv.setVenda(novaVenda);
+		}
+		novaVenda.setProdutos(venda.getProdutos());
+		this.produtoVendaRepository.saveAll(venda.getProdutos());
+		
 		URI uri = ServletUriComponentsBuilder
 				 .fromCurrentRequest()
 				 .path("/{id}")

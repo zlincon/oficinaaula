@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class ProdutoVenda {
 	
 	@EmbeddedId
-	private ProdutoVendaKey id;
+	private ProdutoVendaKey id = new ProdutoVendaKey();
 	
 	@ManyToOne
 	@MapsId("vendaId")
@@ -21,7 +21,7 @@ public class ProdutoVenda {
 	
 	@ManyToOne
 	@MapsId("produtoId")
-	@JoinColumn(name="produtoId")
+	@JoinColumn(name="produto_id")
 	private Produto produto;
 	
 	private int quantidade;

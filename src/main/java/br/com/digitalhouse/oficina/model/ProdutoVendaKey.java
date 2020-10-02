@@ -18,6 +18,14 @@ public class ProdutoVendaKey implements Serializable{
 	private Long vendaId;
 	public ProdutoVendaKey() {
 	}
+	
+	
+	public ProdutoVendaKey(Long produtoId, Long vendaId) {
+		this.produtoId = produtoId;
+		this.vendaId = vendaId;
+	}
+
+
 	public Long getProdutoId() {
 		return produtoId;
 	}
