@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.digitalhouse.oficina.model.Produto;
-import br.com.digitalhouse.oficina.repository.ProdutoRepository;
+import br.com.digitalhouse.oficina.service.ProdutoService;
 
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoResource {
 	
-	private ProdutoRepository produtoRepository; // temporario: deve ser utilizado um service
+	private ProdutoService produtoService;
 
-	public ProdutoResource(ProdutoRepository produtoRepository) {
-		this.produtoRepository = produtoRepository;
+	public ProdutoResource(ProdutoService produtoService) {
+		this.produtoService = produtoService;
 	}
 	@PostMapping
 	public ResponseEntity<Void> create( @RequestBody Produto produto){
 		
-		produto = this.produtoRepository.save(produto);
+		produto = this.produtoService.create(produto);
 		
 		URI uri = ServletUriComponentsBuilder
 				 .fromCurrentRequest()
@@ -43,7 +43,7 @@ public class ProdutoResource {
 	
 	@GetMapping
 	public ResponseEntity<List<Produto>> findAll(){
-		return ResponseEntity.ok(this.produtoRepository.findAll());		
+		return ResponseEntity.ok(this.produtoService.findAll());		
 	}
 	
 	
