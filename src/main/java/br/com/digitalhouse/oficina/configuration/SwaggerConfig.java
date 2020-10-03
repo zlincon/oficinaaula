@@ -2,6 +2,7 @@ package br.com.digitalhouse.oficina.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Pageable;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -15,6 +16,7 @@ public class SwaggerConfig {
 	 @Bean
 	    public Docket api() {
 	        return new Docket(DocumentationType.SWAGGER_2)
+	        .ignoredParameterTypes(Pageable.class)
 	          .select()
 	          .apis(RequestHandlerSelectors.any())
 	          .paths(PathSelectors.any())
