@@ -1,7 +1,9 @@
 package br.com.digitalhouse.oficina.model;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +14,18 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario implements UserDetails {
 	
 	
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -43,6 +52,44 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.roles
+				.stream()
+				.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public String getPassword() {
+		return this.getSenha();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+	
+	
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -99,6 +146,7 @@ public class Usuario {
 			return false;
 		return true;
 	}
+
 	
 	
 
