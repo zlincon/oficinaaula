@@ -27,12 +27,15 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/", "/csrf", "/v2/api-docs", "/configuration/ui", "/swagger-resources/**",
-						"/configuration/**", "/swagger-ui.html", "/webjars/**")
-				.permitAll().antMatchers(HttpMethod.POST, "/usuarios").permitAll()
+						"/configuration/**", "/swagger-ui.html", "/webjars/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/produtos").hasAnyRole("admin","code")
+				.antMatchers(HttpMethod.POST, "/produtos").hasRole("admin")
+				.antMatchers(HttpMethod.POST, "/usuarios").permitAll()
 				.anyRequest().authenticated()
 
-				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().httpBasic()
-				.and().cors().disable().csrf().disable();
+				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and().httpBasic()
+				.and().cors().disable().csrf().disable(); 
 	}
 
 	@Bean

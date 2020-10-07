@@ -33,7 +33,7 @@ public class ProdutoResource {
 				 .path("/{id}")
 				 .buildAndExpand(produto.getId())
 				 .toUri();
-		
+		 
 		
 		return ResponseEntity.created(uri).build();
 		

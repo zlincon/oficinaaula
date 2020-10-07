@@ -15,6 +15,11 @@ public class UserDetailsImpl implements UserDetails {
 	
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String username;
 	
 	private String password;
@@ -36,7 +41,7 @@ public class UserDetailsImpl implements UserDetails {
 				usuario.getUsername(),
 				usuario.getSenha(),
 				usuario.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+				.map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
 				.collect(Collectors.toSet())
 			);
 	}
