@@ -1,12 +1,11 @@
 package br.com.digitalhouse.oficina.model;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,17 +13,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements UserDetails {
+public class Usuario  {
 	
 	
-	
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
@@ -36,7 +29,7 @@ public class Usuario implements UserDetails {
 	@Column(length=100, nullable = false)
 	private String senha;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "usuarios_roles",
 			joinColumns = @JoinColumn(name="usuario_id"),
@@ -52,43 +45,6 @@ public class Usuario implements UserDetails {
 		this.senha = senha;
 	}
 
-	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.roles
-				.stream()
-				.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public String getPassword() {
-		return this.getSenha();
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return false;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
-	
-	
-	
-	
 	
 	public Long getId() {
 		return id;

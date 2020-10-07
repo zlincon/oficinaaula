@@ -1,4 +1,4 @@
-package br.com.digitalhouse.oficina.security;
+package br.com.digitalhouse.oficina;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

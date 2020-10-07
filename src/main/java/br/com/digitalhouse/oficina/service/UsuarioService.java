@@ -5,9 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.digitalhouse.oficina.model.Role;
@@ -16,24 +14,23 @@ import br.com.digitalhouse.oficina.repository.RoleRepository;
 import br.com.digitalhouse.oficina.repository.UsuarioRepository;
 
 @Service
-public class UsuarioService implements UserDetailsService{
+public class UsuarioService {
 	
 	private UsuarioRepository usuarioRepository;
 	private RoleRepository roleRepository;
+	private BCryptPasswordEncoder encoder;
 	
 	@Autowired
-	public UsuarioService(UsuarioRepository usuarioRepository, RoleRepository roleRepository) {
+	public UsuarioService(UsuarioRepository usuarioRepository,
+			RoleRepository roleRepository,
+			BCryptPasswordEncoder encoder) {
 		this.usuarioRepository = usuarioRepository;
 		this.roleRepository = roleRepository;
+		this.encoder = encoder;
 	}
 
 	
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return this.usuarioRepository.findByUsername(username)
-				.orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
-	}
-	
+
 	
 	@Transactional
 	public Usuario create(Usuario usuario) {
@@ -43,6 +40,8 @@ public class UsuarioService implements UserDetailsService{
 		  .forEach(r -> {
 			  r = this.roleRepository.save(r);
 		  });
+		
+		usuario.setSenha(this.encoder.encode(usuario.getSenha()));
 		
 		return this.usuarioRepository.save(usuario);
 	
