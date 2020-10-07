@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,9 +15,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario  {
 	
 	
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -27,7 +29,7 @@ public class Usuario {
 	@Column(length=100, nullable = false)
 	private String senha;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "usuarios_roles",
 			joinColumns = @JoinColumn(name="usuario_id"),
@@ -43,6 +45,7 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -99,6 +102,7 @@ public class Usuario {
 			return false;
 		return true;
 	}
+
 	
 	
 

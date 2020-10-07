@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.digitalhouse.oficina.model.Role;
@@ -17,12 +18,18 @@ public class UsuarioService {
 	
 	private UsuarioRepository usuarioRepository;
 	private RoleRepository roleRepository;
+	private BCryptPasswordEncoder encoder;
 	
 	@Autowired
-	public UsuarioService(UsuarioRepository usuarioRepository, RoleRepository roleRepository) {
+	public UsuarioService(UsuarioRepository usuarioRepository,
+			RoleRepository roleRepository,
+			BCryptPasswordEncoder encoder) {
 		this.usuarioRepository = usuarioRepository;
 		this.roleRepository = roleRepository;
+		this.encoder = encoder;
 	}
+
+	
 
 	
 	@Transactional
@@ -33,6 +40,8 @@ public class UsuarioService {
 		  .forEach(r -> {
 			  r = this.roleRepository.save(r);
 		  });
+		
+		usuario.setSenha(this.encoder.encode(usuario.getSenha()));
 		
 		return this.usuarioRepository.save(usuario);
 	
@@ -46,5 +55,17 @@ public class UsuarioService {
 	public List<Role> findAllRole(){
 		return this.roleRepository.findAll();
 	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
